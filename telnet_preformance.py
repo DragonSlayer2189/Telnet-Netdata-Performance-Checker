@@ -17,7 +17,7 @@ from tkinter import *
 host = 'play.totalfreedom.me'
 port = 'REDACTED'
 database = directory + r"/preformance_checker.db"
-# Main server is 20215, Beta is 8765
+
 colorama.init()
 BLACK = colorama.Fore.BLACK
 RED = colorama.Fore.RED
