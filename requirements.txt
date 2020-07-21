@@ -1,0 +1,4 @@
+netdata
+nest_asyncio
+colorama
+regex
