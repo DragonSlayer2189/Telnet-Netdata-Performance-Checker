@@ -221,7 +221,7 @@ def update_auto():
     autotimer = 0
     while checkauto.get() is True:
         if autotimer <= 300:
-            time.sleep(0.1)
+            time.sleep(1)
             autotimer = autotimer + 1
             print(autotimer)
         if autotimer is 300 or autotimer > 300:
