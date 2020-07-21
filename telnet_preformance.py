@@ -15,7 +15,7 @@ from datetime import datetime
 import tkinter
 from tkinter import *
 host = 'play.totalfreedom.me'
-port = '20215'
+port = 'REDACTED'
 database = directory + r"/preformance_checker.db"
 # Main server is 20215, Beta is 8765
 colorama.init()
