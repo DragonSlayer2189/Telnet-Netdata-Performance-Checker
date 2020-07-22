@@ -8,9 +8,11 @@ This was made in python 3.7.2 and requires a few libraries, to install said libr
 pip install -r requirements.txt
 
 # What does this actually do?
-basicly the telnet script allows you to conect to telnet (provided that you are already have access to telnet) and it will run the command /gc, then log the results in the database.
-and the netdata script reads the data from https://play.totalfreedom.me:19999, grabs some data from there, and puts it into the database.
+basicly the telnet script allows you to connect to telnet (provided that you are already have access to telnet) and it will run the command /gc, then log the results in the database.
+
+the netdata script reads the data from https://play.totalfreedom.me:19999, grabs some data from there, and puts it into the database.
 each script will open a window with a button and a check box, clicking the button will run a manual check, and pressing the checkbox will make the script log automaticly every 5 minutes (may change it to longer idk).
+
 
 # What data does this log?
 The Telnet Script logs the following (for this when i say server i mean the minecraft server):
