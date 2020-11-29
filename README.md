@@ -3,16 +3,15 @@ Made by Eric Bennett, also known as DragonSlayer2189
 
 This code was primarily made for play.totalfreedom.me, but you may use this code, or excerpts of it in any projects you want.
 
-This was made in python 3.7.2 and requires a few libraries, to install said libraries just run the following command
-
-pip install -r requirements.txt
+This was made in python 3.7.6 and requires a few libraries, which you can find a list of in the requirements file
 
 # What does this actually do?
-basicly the telnet script allows you to connect to telnet (provided that you are already have access to telnet) and it will run the command /gc, then log the results in the database.
+Basicly the telnet script allows you to connect to telnet (provided that you are already have access to telnet) and it will run the command /gc, then log the results in the database.
 
-the netdata script reads the data from https://play.totalfreedom.me:19999, grabs some data from there, and puts it into the database.
-each script will open a window with a button and a check box, clicking the button will run a manual check, and pressing the checkbox will make the script log automaticly every 5 minutes (may change it to longer idk).
+The netdata script reads the data from https://play.totalfreedom.me:19999, grabs some data from there, and puts it into the database.
+each script will open a window with a button and a check box, clicking the button will run a manual check, and pressing the checkbox will make the script log automaticly every hour, but the time is adjustable.
 
+Additionaly, after collecting a bunch of data, you can run the averages script to be able to log the averages of all of the data logged through telnet (will add netdata averages soon)
 
 # What data does this log?
 The Telnet Script logs the following (for this when i say server i mean the minecraft server):
