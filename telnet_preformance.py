@@ -1,9 +1,5 @@
-#To Do List:
-# Make SQL database and store info there
-# Combine this with netdata script
-# Allow ability to chose which script to use
-# Make telnet script automatic with a manual feture also allowed
 import os
+import os.path
 directory = os.getcwd()
 import telnetlib
 import time
@@ -15,9 +11,11 @@ from datetime import datetime
 import tkinter
 from tkinter import *
 host = 'play.totalfreedom.me'
-port = 'REDACTED'
-database = directory + r"/preformance_checker.db"
+port = '20215'
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+database = os.path.join(BASE_DIR, "preformance_checker.db")
+# Main server is 20215, Beta is 8765
 colorama.init()
 BLACK = colorama.Fore.BLACK
 RED = colorama.Fore.RED
@@ -29,11 +27,18 @@ CYAN = colorama.Fore.CYAN
 WHITE = colorama.Fore.WHITE
 RESET = colorama.Fore.RESET
 Firstrun = False
+
 #main stuff
 def get_data():
     print(f'{GREEN}Attempting to log telnet data to database...')
-    t = telnetlib.Telnet(host,port)
-    time.sleep(3)
+    try:
+        t = telnetlib.Telnet(host,port)
+        time.sleep(3)
+    except ConnectionRefusedError:
+        print('retrying...')
+        time.sleep(30)
+        get_data()
+        
     i = 0
     outputlist = ['']
     t.write(b'gc\n')
@@ -69,10 +74,19 @@ def get_data():
                 TPS = re.findall('[0-9][0-9].[0-9][0-9]\r\n', strings[i])
                 print(f'{MAGENTA}TPS: ' + TPS[0])
         except IndexError:
-            #print(f'{RED}There was an error while logging the TPS\n')
-            re.compile('\d.')
-            TPS = re.findall('[0-9][0-9]\r\n', strings[i])
-            print(f'{MAGENTA}TPS: ' + TPS[0])
+            try:#print(f'{RED}There was an error while logging the TPS\n')
+                re.compile('\d.')
+                TPS = re.findall('[0-9][0-9]\r\n', strings[i])
+                print(f'{MAGENTA}TPS: ' + TPS[0])
+            except IndexError:
+                try:
+                    re.compile('\d.')
+                    TPS = re.findall('[0-9].[0-9][0-9]\r\n',strings[i])
+                    print(f'{MAGENTA}TPS: ' + TPS[0])
+                except IndexError:
+                    TPS = ['Error\r\n']
+                    print(f'{MAGENTA}TPS: ' + TPS[0])
+                
         if 'Maximum memory' in item:
             max_mem = strings[i+1]
             print(f'{MAGENTA}Maximum memory:' + max_mem)
@@ -91,11 +105,11 @@ def get_data():
             print(f'{RED}Nether:' + nether)
         if 'The End "world_the_end"' in item:
             end = strings[i+1]
-            print(f'{RED}Nether:' + end)
+            print(f'{RED}End:' + end)
         if 'World "flatlands"' in item:
             flatlands = strings[i+1]
             print(f'{RED}Flatlands:' + flatlands)
-        if 'World "adminworld"' in item:
+        if 'World "staffworld"' in item:
             adminworld = strings[i+1]
             print(f'{RED}Admin world:' + adminworld)
         if 'World "masterbuilderworld"' in item:
@@ -197,12 +211,14 @@ def add_data(conn, data):
     return cur.lastrowid
 def update_auto():
     autotimer = 0
+    print(f'{WHITE}Starting Automatic Cycle')
     while checkauto.get() is True:
-        if autotimer <= 300:
+        if autotimer <= 3600:
             time.sleep(1)
+            print(autotimer)
             autotimer = autotimer + 1
-        if autotimer is 300 or autotimer > 300:
-            print('trying to log data')
+        if autotimer is 3600 or autotimer > 3600:
+            print(f'{WHITE}Attempting to automaticly log telnet data')
             get_data()
 
 Firstrun = True
