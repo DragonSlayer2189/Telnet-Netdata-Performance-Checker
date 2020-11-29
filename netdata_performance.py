@@ -13,13 +13,11 @@ from tkinter import *
 from datetime import datetime
 import time
 import nest_asyncio
+import os.path
 nest_asyncio.apply()
-
 
 host = 'play.totalfreedom.me'
 port = '19999'
-
-
 
 colorama.init()
 BLACK = colorama.Fore.BLACK
@@ -31,8 +29,9 @@ MAGENTA = colorama.Fore.MAGENTA
 CYAN = colorama.Fore.CYAN
 WHITE = colorama.Fore.WHITE
 RESET = colorama.Fore.RESET
-directory = os.getcwd()
-database = directory + r"/preformance_checker.db"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+database = os.path.join(BASE_DIR, "preformance_checker.db")
+
 Firstrun = False
 async def main():
     """Get the data from a Netdata instance."""
@@ -220,15 +219,13 @@ def add_data(conn, data):
 def update_auto():
     autotimer = 0
     while checkauto.get() is True:
-        if autotimer <= 300:
+        if autotimer <= 3600:
             time.sleep(1)
             autotimer = autotimer + 1
             print(autotimer)
-        if autotimer is 300 or autotimer > 300:
+        if autotimer is 3600 or autotimer > 3600:
+            print(f'{WHITE}Attempting to automaticly log telnet data')
             get_data()
-
-
-#need to figure out way to run main()
     
     
 def get_data():
