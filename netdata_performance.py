@@ -224,7 +224,7 @@ def update_auto():
             autotimer = autotimer + 1
             print(autotimer)
         if autotimer is 3600 or autotimer > 3600:
-            print(f'{WHITE}Attempting to automaticly log telnet data')
+            print(f'{WHITE}Attempting to automaticly log netdata information')
             get_data()
     
     
